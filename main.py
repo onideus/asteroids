@@ -9,6 +9,12 @@ from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_MIN_RADIUS, ASTEROID
 
 def main():
     pygame.init()
+
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     x = SCREEN_WIDTH / 2
@@ -30,8 +36,10 @@ def main():
                 return
 
         screen.fill((0, 0, 0))
-        player.update(dt)
-        player.draw(screen)
+        updatable.update(dt)
+
+        for drawn in drawable:
+            drawn.draw(screen)
 
         # update screen, must be called once screen is ready to render
         display.flip()
